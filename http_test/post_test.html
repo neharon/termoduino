@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>XMLHttpRequest using POST method</h2>
+
+<button type="button" onclick="loadRequest()">Request post method</button> // calling of a request
+
+<p id="test"></p>
+
+<script>
+
+
+var testData = 
+	{
+		param1:"value1",
+		param2:"value2",
+	arrayParam:[11,22,33,44,55]
+	}
+
+function loadRequest() {
+		var test = document.getElementById("test");
+
+fetch("http://192.168.0.12/postjson/", {
+    method: 'post',
+    body: JSON.stringify(testData),
+    headers: {
+		"Access-Control-Allow-Origin" : "*",
+		"Access-Control-Allow-Methods" : "GET,POST,PUT,DELETE,OPTIONS",
+		"Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Authorization, X-Requested-With",
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }
+}).then((response) => {
+  return response.json();
+}).then((res) => {
+    if (res.status === 201) {
+        console.log("Post successfully created!")
+		test.style.color = 'auto';	
+		test.innerHTML = JSON.stringify(res);
+     }
+}).catch((error) => {
+    console.log(error)
+	test.innerHTML = error;
+	test.style.color = 'red';
+	
+})
+
+}
+
+</script>
+</body>
+</html>
